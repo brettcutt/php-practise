@@ -1,0 +1,90 @@
+.center {
+    text-align: center;
+}
+.inline {display:inline-block;}
+
+.door-btn{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.door-frame {
+    position: relative;
+    background-color: brown;
+    height: 312px;
+    width: 170px;
+}
+
+
+.door-opening {
+    background-color: #000;
+    height: 306px;
+    width: 156px;
+    position: absolute;
+    bottom: 0px;
+    left: 7px;
+}
+
+.door-opening div {
+    cursor: pointer;
+}
+
+.start, .middle, .end {
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+    display: inline-block;
+    height: 300px;
+    width: 150px;
+    transition: 1s;
+}
+
+.start::after, .middle::after, .end::after {
+    position: absolute;
+    top: 140px;
+    right: 10px;
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
+    background-color: gold;    
+    z-index: 1;
+}
+
+.end::after {
+    width: 3px;
+    right: 13px;
+}
+
+.start:hover, .middle:hover {
+transform: skewY(7deg);
+width: 140px;
+bottom: -6px;
+box-shadow: 0px 7px 47px 4px rgba(0,0,0,0.54);
+}
+
+.door1 {
+    background: red;
+}
+.door2 {
+    background: green;
+}
+.door3 {
+    background: blue;
+}
+
+.door-number {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 50px; 
+}
+
+.end {
+    bottom: -20px;
+    left: -19px;
+    width: 20px;
+    transform: skewY(-67deg);
+    transition: 1s;
+    box-shadow: 0px 7px 47px 4px rgba(0,0,0,0.54);
+}
