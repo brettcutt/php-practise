@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="static/js/main.js">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
-    <div class="row center">
+    <div class="container">    
+    <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="stay-or-switch.php">Stay or Switch</a></li>
+                <li><a href="conundrum.php">Conundrum</a></li>
+            </ul>
+        </nav>
+    <div class="row center pos-r">
         <div class="col-12">
             <h1 class='center'>Stay or Switch</h1> <br>
-            <a href="index.php">conundrum</a><br>
-            <a href='stay-or-switch.php'>Restart</a>
+            <a class='btn btn-success restart' href='stay-or-switch.php'>Restart</a>
 
         </div>
 
@@ -177,7 +183,7 @@ if ( $round == 1) {
     $json_data = json_encode($data);
     file_put_contents('results.json', $json_data);
     echo "<br>";
-    echo "<p><b>Wins by players:</b></p>";
+    echo "<p><b>Wins by:</b></p>";
     echo "<p><b>Staying</b>: ".round(($stay / ($stay+$switch))*100,2)."%</p>";
     echo "<p><b>Switching</b>: ".round(($switch / ($stay+$switch))*100,2)."%</p>";
 
@@ -185,7 +191,7 @@ if ( $round == 1) {
     endRow();
     echo "<div class='row center'>";
     echo "<div class='col-12'>";
-    echo "<a href='stay-or-switch.php'>Play Again</a>";
+    echo "<a class='btn btn-success' href='stay-or-switch.php'>Play Again</a>";
     echo "</div>";
     echo "</div>";
 
@@ -206,7 +212,7 @@ if ( $round == 1) {
 ?>
 
 
-
+</div>
 </body>
 </html>
 

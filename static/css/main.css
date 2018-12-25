@@ -1,8 +1,69 @@
+body {
+    background-image: url(../img/sky.jpg);
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(255,255,255,0.8);
+    height: 100vh;
+    position: relative;
+    padding-top:50px;
+}
+
+nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+nav ul{
+    list-style: none;
+    margin: 0;
+
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    color: #000;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 3px 5px;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
+}
+
 .center {
     text-align: center;
 }
 .inline {display:inline-block;}
 
+.pos-r {
+    position: relative;
+}
+
+/* INDEX */
+.first-row {
+    margin-bottom: 100px;
+}
+
+
+/*  STAY OR SWITCH */
+
+.restart {
+    position: absolute;
+    left: 260px;
+    top: 70px;
+}
 .door-btn{
     display: inline-block;
     margin: 0 10px;

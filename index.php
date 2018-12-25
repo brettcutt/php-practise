@@ -4,79 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
     <title>Document</title>
 </head>
 <body>
-<a href="stay-or-switch.php">doors</a>
-<?php
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="stay-or-switch.php">Stay or Switch</a></li>
+                <li><a href="conundrum.php">Conundrum</a></li>
+            </ul>
+        </nav>
+        <div class="row first-row">
+            <div class="col-12">
 
-$data = '{
-    "What is always coming but never arrives?":"tomorrow",
-"I am black when clean and white when dirty. What am I?":"chalkboard",
-"Sometimes I walk in front of you. Sometimes I walk behind you. It is only in the dark that I ever leave you. What am I?":"shadow",
-"What comes down but never goes up?":"rain",
-"What has a bed but doesn\'t sleep and a mouth but never eats?":"river",
-"I\'m always hungry and must be fed, the finger I touch will soon turn red, what am I?":"fire",
-"I can\'t be seen but I\'m not a ghost. I can crack but I don\'t break. I can clap but I don\'t have any hands. I happen after a flash but I\'m not a photo. I\'m loud but I\'m not music. What am I?":"thunder",
-"Who makes it, has no need of it. Who buys it, has no use for it. Who uses it doesn\'t know it. What is it?":"coffin",
-"I have seas without water, coasts without sand, towns without people and mountains without land. What am I?":"map",
-"I don\'t have eyes, but once I did see. Once I had thoughts, but now I\'m white and empty. What am I?":"skull"
-}';
-$data = json_decode($data, true);
+                <h1 class='center'>PHP written games</h1>
 
-$guess = $_POST['guess'];
-$counter = $_POST['counter'];
-$attempt = $_POST['attempt'];
-$score = $_POST['score'];
+            </div>
+        </div>
 
-if ($counter == "") {
-    $counter = 0;
-}
-if ($attempt == "") {
-    $attempt = 5;
-}
-if ($score == "") {
-    $score = 0;
-}
+        <div class="row">
+            <div class="col-6">
+                <h4 class="center">Stay or Switch</h4>
+                <p>Many years ago on a tv series called Myth busters, the hosts conducted an 
+                    experiment on an old television game show.
+                    
+                    <br><br>
+                    The stages were as follows:
+                </p>
+                <ul>
 
+                <li>The contestants would pick one out 
+                    of three doors which they thought the games prize would be behind.</li>
+                <li>When the contestant picked a door, one door which was known not to have the prize
+                    behind it, would be taken away as an option.</li>
+                <li>The contestant were proposed with
+                    the option of staying with their first gut feeling or switching to the other door. </li>
+                <li>The decision is now final and the chosen door is revealed. </li>
+                </ul>
+                    
+                     
+                <div class='center'>
+                    <a href="stay-or-switch.php" class="btn btn-primary inline">Stay or Switch</a>
+                </div>
+            </div>
+            <div class="col-6 center">
+                <h4 class="center">Conundrum</h4>
+                <p>This is based on the third project 'Conundrum' that I completed in my 
+                    full stack web development course.
+                    The purpose of this was to repeat something I was already familiar but using the 
+                    language php, instead of the projects previous language python and the flask framework.
+                </p>
+                <div class='center'>
+                <a href="conundrum.php" class="btn btn-primary inline">Conundrum</a>
+                </div>
+            </div>
+        </div>
 
-$keys = array_keys($data);
-
-$question =  $keys[$counter];
-$answer = $data[$keys[$counter]];
-if ($guess == "" && $counter == 0 ) {
-    echo "<h1>Welcome!</h1>";
-    $question =  $keys[0];
-} else if ($guess == $answer) {
-    echo "<h1>Correct, well done!</h1>";
-    $score = ($score + 10) - ((5 - $attempt)*2);
-    $attempt = 5;
-    $counter = $counter + 1;
-} else if ($attempt == 1) {
-    echo "<h1>Next Question!</h1>";
-    $attempt = 5;
-    $counter = $counter + 1;
-    
-} else if  ( $guess != $answer){
-    echo "<h1>Incorrect, try again!</h1>";
-    $attempt = $attempt - 1;
-    $counter = $counter;
-} 
-
-    echo "<p>Question: ". ($counter + 1) ." of 10</p>";
-    echo "<p>Attempts Left: ".$attempt."</p>";
-    echo "<p>Score: ". $score ."</p>";
-    $question =  $keys[$counter];
-    $answer = $data[$keys[$counter]];
-    echo "<h3>" . $question . "</h3>";
-    echo " <form action='index.php' method='POST'>";
-    echo "<input required name='guess' type='text'>";
-    echo "<input type='hidden' name='attempt' value='" . $attempt . "'>";
-    echo "<input type='hidden' name='counter' value='" . $counter . "'>";
-    echo "<input type='hidden' name='score' value='" . $score . "'>";
-    echo "<input type='submit' value='post'></form>";
-
-?>
+    </div>
 
 </body>
 </html>
