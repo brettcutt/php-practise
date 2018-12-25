@@ -58,12 +58,14 @@ nav li a:hover {
 
 
 /*  STAY OR SWITCH */
-
-.restart {
-    position: absolute;
-    left: 260px;
-    top: 70px;
+.content-col {
+    margin-bottom: 30px;
 }
+
+.status {
+    margin:0 20px;
+}
+
 .door-btn{
     display: inline-block;
     margin: 0 10px;

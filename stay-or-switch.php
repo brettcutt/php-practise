@@ -20,7 +20,6 @@
     <div class="row center pos-r">
         <div class="col-12">
             <h1 class='center'>Stay or Switch</h1> <br>
-            <a class='btn btn-success restart' href='stay-or-switch.php'>Restart</a>
 
         </div>
 
@@ -45,6 +44,7 @@ if ($round == 1) {
 
     $cpu_choice = $choices[array_rand($choices)];
     $player_choice = $door;
+    $original_choice = $door;
 
     // ROUND 1 IF THE PLAYERS CHOICE IS EQUAL TO THE CPU
     if ($player_choice == $cpu_choice) {
@@ -74,7 +74,7 @@ if ($round == 1) {
 
 //############################################ ROUND 2 LOGIC
 } else if ($round == 2){
-
+    $original_choice = $_POST['original_choice'];
     $correct_choice = $_POST["correct_choice"];
     $player_choice = $_POST["player_choice"];
     $round =3;
@@ -90,14 +90,20 @@ if ($round == "") {
 
 // START OF DIV ROW
 function startRow(&$round, &$player_choice, &$other_choice) {
-    echo "<div class='row center'>";
-    echo " <div class='col-12'>";
-    echo " <p class='center'><b>Round:</b> ".$round."<p>";
-
+    echo "<div class='row door-row center'>";
+    echo " <div class='col-12 content-col'>";
+    echo "<a class='btn btn-success restart' href='stay-or-switch.php'>Restart</a>";
+    echo " <p class='center inline status'><b>Round:</b> ".$round."</p>";
+    
     if ($round == 1) {
-        echo " <p class='center'>One of these three doors has a prize behind it. Choose the door you think it is behind.<p>";
+        echo " <p class='center inline status'><b>Players choice:</b> None</p>";
+        echo " <p class='center'>One of these three doors has a prize behind it. Choose the door you think it is behind.</p>";
     } else if ($round ==2) {
-        echo " <p class='center'>You have chosen <b>door ". $player_choice ."</b>. Now you have the option to to stay with your original decision or switch to <b>door ". $other_choice ."</b>.<p>";
+        echo " <p class='center inline status'><b>Players choice: </b>Door ".$player_choice."</p>";
+        echo " <p class='center'>You have chosen <b>door ". $player_choice ."</b>. Now you have the option to to stay with your original decision or switch to <b>door ". $other_choice ."</b>.</p>";
+    } else {
+        
+        echo " <p class='center inline status'><b>Players choice: </b>Door ".$player_choice."</p>";
     }
     echo " </div>";
 }
@@ -139,7 +145,7 @@ if ( $round == 1) {
 
 //############################################# ROUND 2 HTML
 } else if ( $round ==2 ) {
-
+    
     startRow($round, $player_choice, $other_choice);
     echo "<div class='col-2'></div>";
     $stage = "hello";
@@ -148,6 +154,7 @@ if ( $round == 1) {
         echo    "<form name='form' class='door-btn' action='stay-or-switch.php' method='POST'>";
         echo       "<input type='hidden' name='round' value=".$round.">";
         echo       "<input type='hidden' name='correct_choice' value=".$correct_choice .">";
+        echo       "<input type='hidden' name='original_choice' value=".$original_choice .">";
         echo       "<input type='hidden' name='player_choice' value='".$item."'>";
         door($item, $stage = "middle");
         echo    "</form>";
@@ -164,18 +171,30 @@ if ( $round == 1) {
     echo "<div class='col-6 center'>";
     
 
-    if ( $player_choice == $correct_choice) {
-
-        echo "<p class='center'><b>Well done</b>, door ".$correct_choice." is correct.</p>";
+    if ( $player_choice == $correct_choice && $player_choice == $original_choice) {
+        echo "<p class='center'><b>Well done, you win</b></p>";
+        echo "<p class='center'>You stayed with your gut feeling. <b>Door ".$correct_choice."</b> is correct.</p>";
         $stay = (int)$stay + 1;
         $switch = (int)$switch + 0;
 
-    } else {
-        echo "<p class='center'><b>Sorry</b>, wrong door. The correct choice was door ".$correct_choice.".</p>";
+    } else if ($player_choice != $correct_choice && $player_choice == $original_choice) {
+        echo "<p class='center'><b>Good Try, you lose</b></p>";
+        echo "<p class='center'>You stayed with <b>door ".$original_choice."</b>, but should have switched to <b>door ".$correct_choice."</b>.</p>";
         $stay = (int)$stay + 0;
         $switch = (int)$switch + 1;
 
+    }  else if ($player_choice != $correct_choice && $player_choice != $original_choice) {
+        echo "<p class='center'><b>Good Try, you lose</b></p>";
+        echo "<p class='center'>You switched to <b>door ".$player_choice."</b>, but should have stayed with <b>door ".$original_choice."</b>.</p>";
+        $stay = (int)$stay + 1;
+        $switch = (int)$switch + 0;
+    } else {
+        echo "<p class='center'><b>Well done, you win</b></p>";
+        echo "<p class='center'>You switched to <b>door ".$correct_choice."</b>, when your original choice was <b>door ".$original_choice."</b>.</p>";
+        $stay = (int)$stay + 0;
+        $switch = (int)$switch + 1;
     }
+
     door($correct_choice, $stage = "end");
     echo "</div>";
     echo "<div class='col-6 center'>";
@@ -183,7 +202,7 @@ if ( $round == 1) {
     $json_data = json_encode($data);
     file_put_contents('results.json', $json_data);
     echo "<br>";
-    echo "<p><b>Wins by:</b></p>";
+    echo "<p><b>The prize is won mostly by:</b></p>";
     echo "<p><b>Staying</b>: ".round(($stay / ($stay+$switch))*100,2)."%</p>";
     echo "<p><b>Switching</b>: ".round(($switch / ($stay+$switch))*100,2)."%</p>";
 
@@ -194,11 +213,9 @@ if ( $round == 1) {
     echo "<a class='btn btn-success' href='stay-or-switch.php'>Play Again</a>";
     echo "</div>";
     echo "</div>";
-
-    // OVER WRITING JSON DATA WITH THE NEW RESULTS
+    
     
 }
-    
 
     //$test = fopen("logs.txt" ,"r");
     //while ($line = fgets($test)) {
